@@ -100,7 +100,7 @@
   ansible.builtin.command: raspi-config nonint do_boot_splash 0
   changed_when: splash_config.stdout|int == 1
   when: raspi_config_enable_boot_splash_screen and
-    splash_config.stdout|int == 1
+    splash_config is defined and splash_config.stdout is defined and splash_config.stdout|int == 1
   tags: 
   - raspi_config:system:splash_screen
   - raspi_config:system:splash_screen:enable
