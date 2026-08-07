@@ -190,26 +190,10 @@
 
 # "I8 Remote GPIO" "Enable/disable remote access to GPIO pins" \
 - name: Get current Remote GPIO status
-  ansible.builtin.command: raspi-config nonint get_rgpio
-  changed_when: false
-  register: remote_gpio_status
+  ansible.builtin.fail:
+    msg: "Changing Remote GPIO settings hasn't been re-implemented yet"
+  ignore_errors: true
   tags:
   - raspi_config:interface:remote_gpio
   - raspi_config:interface:remote_gpio:enable
-  - raspi_config:interface:remote_gpio:disable
-
-- name: Enable Remote GPIO support
-  ansible.builtin.command: raspi-config nonint do_rgpio 0
-  changed_when: remote_gpio_status.stdout|int == 1
-  when: raspi_config_enable_remote_gpio
-  tags:
-  - raspi_config:interface:remote_gpio
-  - raspi_config:interface:remote_gpio:enable
-
-- name: Disable Remote GPIO support
-  ansible.builtin.command: raspi-config nonint do_rgpio 1
-  changed_when: remote_gpio_status.stdout|int == 0
-  when: not raspi_config_enable_remote_gpio
-  tags:
-  - raspi_config:interface:remote_gpio
   - raspi_config:interface:remote_gpio:disable
